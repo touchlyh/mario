@@ -1,0 +1,15 @@
+/mario/.settings
+/mario/.project
+/mario/mario-api/.project
+/mario/mario-api/target
+/mario/mario-api/.classpath
+/mario/mario-api-provider/target
+/mario/mario-api-provider/.classpath
+/mario/mario-api-provider/.project
+/mario/mario-wap-facade/.project
+/mario/mario-wap-facade/target
+/mario/mario-wap-facade/.classpath
+/mario/mario-wap-web/.project
+/mario/mario-wap-web/target
+/mario/mario-wap-web/.classpath
+/mario/.settings/org.eclipse.m2e.core.prefs
