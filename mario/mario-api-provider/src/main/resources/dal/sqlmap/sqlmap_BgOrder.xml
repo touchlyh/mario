@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+
+<sqlMap namespace="Order" >
+
+  <typeAlias alias="bgOrderDO" type="org.yuanhong.li.bg.api.meta.OrderDO" />
+
+  <resultMap id="bgOrderDOResultMap" class="bgOrderDO" >
+    <result property="id" column="id" />
+    <result property="gmtCreate" column="gmt_create" />
+    <result property="gmtModified" column="gmt_modified" />
+    <result property="planTotal" column="plan_total" />
+    <result property="paymentTotal" column="payment_total" />
+    <result property="userId" column="user_id" />
+    <result property="payTime" column="pay_time" />
+    <result property="shipAddressId" column="ship_address_id" />
+    <result property="orderStatus" column="order_status" />
+    <result property="salePrice" column="sale_price" />
+    <result property="status" column="status" />
+  </resultMap>
+
+  <sql id="bgOrder_columns" >
+    a1.id, a1.gmt_create, a1.gmt_modified, a1.plan_total, a1.payment_total, a1.user_id, 
+      a1.pay_time, a1.ship_address_id, a1.order_status, a1.sale_price, a1.status
+  </sql>
+
+  <sql id="bgOrder_do_columns" >
+    a1.id, a1.gmt_create, a1.gmt_modified, a1.plan_total, a1.payment_total, a1.user_id, 
+      a1.pay_time, a1.ship_address_id, a1.order_status, a1.sale_price, a1.status
+  </sql>
+
+  <sql id="doQueryParams" >
+   where status!=-1
+    <dynamic>
+      <isNotNull property="id" prepend="AND" >
+        <![CDATA[  
+        id = #id#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="gmtCreate" prepend="AND" >
+        <![CDATA[  
+        gmt_create = #gmtCreate#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="gmtModified" prepend="AND" >
+        <![CDATA[  
+        gmt_modified = #gmtModified#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="planTotal" prepend="AND" >
+        <![CDATA[  
+        plan_total = #planTotal#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="paymentTotal" prepend="AND" >
+        <![CDATA[  
+        payment_total = #paymentTotal#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="userId" prepend="AND" >
+        <![CDATA[  
+        user_id = #userId#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="payTime" prepend="AND" >
+        <![CDATA[  
+        pay_time = #payTime#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="shipAddressId" prepend="AND" >
+        <![CDATA[  
+        ship_address_id = #shipAddressId#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="orderStatus" prepend="AND" >
+        <![CDATA[  
+        order_status = #orderStatus#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="salePrice" prepend="AND" >
+        <![CDATA[  
+        sale_price = #salePrice#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="status" prepend="AND" >
+        <![CDATA[  
+        status = #status#  
+        ]]>  
+      </isNotNull>
+    </dynamic>
+  </sql>
+
+  <insert id="insert" parameterClass="bgOrderDO" >
+    INSERT INTO bg_order( id, gmt_create, gmt_modified, plan_total, payment_total, user_id, 
+      pay_time, ship_address_id, order_status, sale_price, status)
+     VALUES ( #id#, now(), now(), #planTotal#, #paymentTotal#, #userId#, 
+      #payTime#, #shipAddressId#, #orderStatus#, #salePrice#, #status#)
+    <selectKey keyProperty="id" resultClass="java.lang.Long" >
+      SELECT LAST_INSERT_ID() AS value
+    </selectKey>
+  </insert>
+
+  <update id="update" parameterClass="bgOrderDO" >
+    UPDATE bg_order set gmt_modified=now()  
+    <dynamic>
+      <isNotNull property="planTotal" prepend="," >
+        <![CDATA[  
+        plan_total = #planTotal#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="paymentTotal" prepend="," >
+        <![CDATA[  
+        payment_total = #paymentTotal#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="userId" prepend="," >
+        <![CDATA[  
+        user_id = #userId#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="payTime" prepend="," >
+        <![CDATA[  
+        pay_time = #payTime#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="shipAddressId" prepend="," >
+        <![CDATA[  
+        ship_address_id = #shipAddressId#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="orderStatus" prepend="," >
+        <![CDATA[  
+        order_status = #orderStatus#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="salePrice" prepend="," >
+        <![CDATA[  
+        sale_price = #salePrice#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="status" prepend="," >
+        <![CDATA[  
+        status = #status#  
+        ]]>  
+      </isNotNull>
+    </dynamic>
+     WHERE id = #id#  
+  </update>
+
+  <select id="findByPrimaryKey" parameterClass="java.lang.Long" resultMap="bgOrderDOResultMap" >
+     SELECT 
+    <include refid="bgOrder_do_columns" />
+    <![CDATA[  
+     FROM bg_order a1 WHERE id = #id# and status!=-1
+    ]]>  
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterClass="java.lang.Long" >
+    <![CDATA[  
+     DELETE FROM bg_order WHERE id = #id#
+    ]]>  
+  </delete>
+
+  <select id="countByDOExample" parameterClass="bgOrderDO" resultClass="java.lang.Integer" >
+    SELECT COUNT(id) AS num FROM bg_order 
+    <include refid="doQueryParams" />
+  </select>
+
+  <select id="findListByDO" resultMap="bgOrderDOResultMap" parameterClass="bgOrderDO" >
+     SELECT 
+    <include refid="bgOrder_do_columns" />
+     FROM bg_order a1 
+    <include refid="doQueryParams" />
+  </select>
+</sqlMap>

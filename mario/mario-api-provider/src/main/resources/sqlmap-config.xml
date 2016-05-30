@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMapConfig PUBLIC "-//iBATIS.com//DTD SQL Map Config 2.0//EN" "http://www.ibatis.com/dtd/sql-map-config-2.dtd">
+<sqlMapConfig>
+	<settings useStatementNamespaces="true"/>
+    <sqlMap resource="dal/sqlmap/sqlmap_BgCartItem.xml"/>
+    <sqlMap resource="dal/sqlmap/sqlmap_BgCourse.xml"/>
+    <sqlMap resource="dal/sqlmap/sqlmap_BgInstitute.xml"/>
+    <sqlMap resource="dal/sqlmap/sqlmap_BgOrder.xml"/>
+    <sqlMap resource="dal/sqlmap/sqlmap_BgOrderItem.xml"/>
+    <sqlMap resource="dal/sqlmap/sqlmap_BgOrderLog.xml"/>
+    <sqlMap resource="dal/sqlmap/sqlmap_BgPayRecord.xml"/>
+    <sqlMap resource="dal/sqlmap/sqlmap_BgProvince.xml"/>
+    <sqlMap resource="dal/sqlmap/sqlmap_BgShipAddress.xml"/>
+    <sqlMap resource="dal/sqlmap/sqlmap_BgSku.xml"/>
+    <sqlMap resource="dal/sqlmap/sqlmap_BgSpu.xml"/>
+    <sqlMap resource="dal/sqlmap/sqlmap_BgUniversity.xml"/>
+    <sqlMap resource="dal/sqlmap/sqlmap_BgUser.xml"/>
+</sqlMapConfig>

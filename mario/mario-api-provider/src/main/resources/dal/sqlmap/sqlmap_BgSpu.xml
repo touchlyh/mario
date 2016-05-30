@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+
+<sqlMap namespace="Spu" >
+
+  <typeAlias alias="bgSpuDO" type="org.yuanhong.li.bg.api.meta.SpuDO" />
+
+  <resultMap id="bgSpuDOResultMap" class="bgSpuDO" >
+    <result property="id" column="id" />
+    <result property="gmtCreate" column="gmt_create" />
+    <result property="gmtModified" column="gmt_modified" />
+    <result property="categoryId" column="category_id" />
+    <result property="universityId" column="university_id" />
+    <result property="instituteId" column="institute_id" />
+    <result property="courseId" column="course_id" />
+    <result property="name" column="name" />
+    <result property="marketPrice" column="market_price" />
+    <result property="salePrice" column="sale_price" />
+    <result property="picPath" column="pic_path" />
+    <result property="innerHtml" column="inner_html" />
+    <result property="status" column="status" />
+  </resultMap>
+
+  <sql id="bgSpu_columns" >
+    a1.id, a1.gmt_create, a1.gmt_modified, a1.category_id, a1.university_id, a1.institute_id, 
+      a1.course_id, a1.name, a1.market_price, a1.sale_price, a1.pic_path, a1.inner_html, 
+      a1.status
+  </sql>
+
+  <sql id="bgSpu_do_columns" >
+    a1.id, a1.gmt_create, a1.gmt_modified, a1.category_id, a1.university_id, a1.institute_id, 
+      a1.course_id, a1.name, a1.market_price, a1.sale_price, a1.pic_path, a1.inner_html, 
+      a1.status
+  </sql>
+
+
+  <sql id="doQueryParams" >
+  	where status!=-1
+    <dynamic>
+      <isNotNull property="id" prepend="AND" >
+        <![CDATA[  
+        id = #id#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="gmtCreate" prepend="AND" >
+        <![CDATA[  
+        gmt_create = #gmtCreate#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="gmtModified" prepend="AND" >
+        <![CDATA[  
+        gmt_modified = #gmtModified#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="categoryId" prepend="AND" >
+        <![CDATA[  
+        category_id = #categoryId#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="universityId" prepend="AND" >
+        <![CDATA[  
+        university_id = #universityId#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="instituteId" prepend="AND" >
+        <![CDATA[  
+        institute_id = #instituteId#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="courseId" prepend="AND" >
+        <![CDATA[  
+        course_id = #courseId#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="name" prepend="AND" >
+        <![CDATA[  
+        name = #name#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="marketPrice" prepend="AND" >
+        <![CDATA[  
+        market_price = #marketPrice#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="salePrice" prepend="AND" >
+        <![CDATA[  
+        sale_price = #salePrice#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="picPath" prepend="AND" >
+        <![CDATA[  
+        pic_path = #picPath#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="innerHtml" prepend="AND" >
+        <![CDATA[  
+        inner_html = #innerHtml#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="status" prepend="AND" >
+        <![CDATA[  
+        status = #status#  
+        ]]>  
+      </isNotNull>
+    </dynamic>
+  </sql>
+
+  <insert id="insert" parameterClass="bgSpuDO" >
+    INSERT INTO bg_spu( id, gmt_create, gmt_modified, category_id, university_id, institute_id, 
+      course_id, name, market_price, sale_price, pic_path, inner_html, status
+      )
+     VALUES ( #id#, now(), now(), #categoryId#, #universityId#, #instituteId#, 
+      #courseId#, #name#, #marketPrice#, #salePrice#, #picPath#, #innerHtml#, #status#
+      )
+    <selectKey keyProperty="id" resultClass="java.lang.Long" >
+      SELECT LAST_INSERT_ID() AS value
+    </selectKey>
+  </insert>
+
+  <update id="update" parameterClass="bgSpuDO" >
+    UPDATE bg_spu   set gmt_modified=now()
+    <dynamic>
+      <isNotNull property="categoryId" prepend="," >
+        <![CDATA[  
+        category_id = #categoryId#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="universityId" prepend="," >
+        <![CDATA[  
+        university_id = #universityId#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="instituteId" prepend="," >
+        <![CDATA[  
+        institute_id = #instituteId#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="courseId" prepend="," >
+        <![CDATA[  
+        course_id = #courseId#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="name" prepend="," >
+        <![CDATA[  
+        name = #name#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="marketPrice" prepend="," >
+        <![CDATA[  
+        market_price = #marketPrice#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="salePrice" prepend="," >
+        <![CDATA[  
+        sale_price = #salePrice#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="picPath" prepend="," >
+        <![CDATA[  
+        pic_path = #picPath#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="innerHtml" prepend="," >
+        <![CDATA[  
+        inner_html = #innerHtml#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="status" prepend="," >
+        <![CDATA[  
+        status = #status#  
+        ]]>  
+      </isNotNull>
+    </dynamic>
+     WHERE id = #id#  
+  </update>
+
+  <select id="findByPrimaryKey" parameterClass="java.lang.Long" resultMap="bgSpuDOResultMap" >
+     SELECT 
+    <include refid="bgSpu_do_columns" />
+    <![CDATA[  
+     FROM bg_spu a1 WHERE id = #id# and status!=-1
+    ]]>  
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterClass="java.lang.Long" >
+    <![CDATA[  
+     DELETE FROM bg_spu WHERE id = #id#
+    ]]>  
+  </delete>
+
+  <select id="countByDOExample" parameterClass="bgSpuDO" resultClass="java.lang.Integer" >
+    SELECT COUNT(id) AS num FROM bg_spu 
+    <include refid="doQueryParams" />
+  </select>
+
+  <select id="findListByDO" resultMap="bgSpuDOResultMap" parameterClass="bgSpuDO" >
+     SELECT 
+    <include refid="bgSpu_do_columns" />
+     FROM bg_spu a1 
+    <include refid="doQueryParams" />
+  </select>
+</sqlMap>

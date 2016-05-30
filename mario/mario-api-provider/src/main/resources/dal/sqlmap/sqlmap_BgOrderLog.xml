@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+
+<sqlMap namespace="OrderLog" >
+
+  <typeAlias alias="bgOrderLogDO" type="org.yuanhong.li.bg.api.meta.OrderLogDO" />
+
+  <resultMap id="bgOrderLogDOResultMap" class="bgOrderLogDO" >
+    <result property="id" column="id" />
+    <result property="gmtCreate" column="gmt_create" />
+    <result property="gmtModified" column="gmt_modified" />
+    <result property="orderId" column="order_id" />
+    <result property="las" column="las" />
+    <result property="cur" column="cur" />
+    <result property="status" column="status" />
+  </resultMap>
+
+  <sql id="bgOrderLog_columns" >
+    a1.id, a1.gmt_create, a1.gmt_modified, a1.order_id, a1.las, a1.cur, a1.status
+  </sql>
+
+  <sql id="bgOrderLog_do_columns" >
+    a1.id, a1.gmt_create, a1.gmt_modified, a1.order_id, a1.las, a1.cur, a1.status
+  </sql>
+
+  <sql id="doQueryParams" >
+   where status!=-1
+    <dynamic>
+      <isNotNull property="id" prepend="AND" >
+        <![CDATA[  
+        id = #id#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="gmtCreate" prepend="AND" >
+        <![CDATA[  
+        gmt_create = #gmtCreate#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="gmtModified" prepend="AND" >
+        <![CDATA[  
+        gmt_modified = #gmtModified#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="orderId" prepend="AND" >
+        <![CDATA[  
+        order_id = #orderId#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="las" prepend="AND" >
+        <![CDATA[  
+        las = #las#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="cur" prepend="AND" >
+        <![CDATA[  
+        cur = #cur#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="status" prepend="AND" >
+        <![CDATA[  
+        status = #status#  
+        ]]>  
+      </isNotNull>
+    </dynamic>
+  </sql>
+
+  <insert id="insert" parameterClass="bgOrderLogDO" >
+    INSERT INTO bg_order_log( id, gmt_create, gmt_modified, order_id, las, cur, status)
+     VALUES ( #id#, now(), now(), #orderId#, #las#, #cur#, #status#)
+    <selectKey keyProperty="id" resultClass="java.lang.Long" >
+      SELECT LAST_INSERT_ID() AS value
+    </selectKey>
+  </insert>
+
+  <update id="update" parameterClass="bgOrderLogDO" >
+    UPDATE bg_order_log   set gmt_modified=now()
+    <dynamic>
+      <isNotNull property="orderId" prepend="," >
+        <![CDATA[  
+        order_id = #orderId#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="las" prepend="," >
+        <![CDATA[  
+        las = #las#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="cur" prepend="," >
+        <![CDATA[  
+        cur = #cur#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="status" prepend="," >
+        <![CDATA[  
+        status = #status#  
+        ]]>  
+      </isNotNull>
+    </dynamic>
+     WHERE id = #id#  
+  </update>
+
+  <select id="findByPrimaryKey" parameterClass="java.lang.Long" resultMap="bgOrderLogDOResultMap" >
+     SELECT 
+    <include refid="bgOrderLog_do_columns" />
+    <![CDATA[  
+     FROM bg_order_log a1 WHERE id = #id# and status!=-1
+    ]]>  
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterClass="java.lang.Long" >
+    <![CDATA[  
+     DELETE FROM bg_order_log WHERE id = #id#
+    ]]>  
+  </delete>
+
+  <select id="countByDOExample" parameterClass="bgOrderLogDO" resultClass="java.lang.Integer" >
+    SELECT COUNT(id) AS num FROM bg_order_log 
+    <include refid="doQueryParams" />
+  </select>
+
+  <select id="findListByDO" resultMap="bgOrderLogDOResultMap" parameterClass="bgOrderLogDO" >
+     SELECT 
+    <include refid="bgOrderLog_do_columns" />
+     FROM bg_order_log a1 
+    <include refid="doQueryParams" />
+  </select>
+</sqlMap>

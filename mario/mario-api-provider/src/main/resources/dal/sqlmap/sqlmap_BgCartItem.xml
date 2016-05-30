@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+
+<sqlMap namespace="CartItem" >
+
+  <typeAlias alias="bgCartItemDO" type="org.yuanhong.li.bg.api.meta.CartItemDO" />
+
+  <resultMap id="bgCartItemDOResultMap" class="bgCartItemDO" >
+    <result property="id" column="id" />
+    <result property="gmtCreate" column="gmt_create" />
+    <result property="gmtModified" column="gmt_modified" />
+    <result property="userId" column="user_id" />
+    <result property="skuId" column="sku_id" />
+    <result property="salePrice" column="sale_price" />
+    <result property="amount" column="amount" />
+    <result property="status" column="status" />
+  </resultMap>
+
+  <sql id="bgCartItem_columns" >
+    a1.id, a1.gmt_create, a1.gmt_modified, a1.user_id, a1.sku_id, a1.sale_price, a1.amount, 
+      a1.status
+  </sql>
+
+  <sql id="bgCartItem_do_columns" >
+    a1.id, a1.gmt_create, a1.gmt_modified, a1.user_id, a1.sku_id, a1.sale_price, a1.amount, 
+      a1.status
+  </sql>
+
+  <sql id="doQueryParams" >
+  	where status !=-1
+    <dynamic>
+      <isNotNull property="id" prepend="AND" >
+        <![CDATA[  
+        id = #id#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="gmtCreate" prepend="AND" >
+        <![CDATA[  
+        gmt_create = #gmtCreate#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="gmtModified" prepend="AND" >
+        <![CDATA[  
+        gmt_modified = #gmtModified#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="userId" prepend="AND" >
+        <![CDATA[  
+        user_id = #userId#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="skuId" prepend="AND" >
+        <![CDATA[  
+        sku_id = #skuId#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="salePrice" prepend="AND" >
+        <![CDATA[  
+        sale_price = #salePrice#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="amount" prepend="AND" >
+        <![CDATA[  
+        amount = #amount#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="status" prepend="AND" >
+        <![CDATA[  
+        status = #status#  
+        ]]>  
+      </isNotNull>
+    </dynamic>
+  </sql>
+
+  <insert id="insert" parameterClass="bgCartItemDO" >
+    INSERT INTO bg_cart_item( id, gmt_create, gmt_modified, user_id, sku_id, sale_price, amount, 
+      status)
+     VALUES ( #id#, now(), now(), #userId#, #skuId#, #salePrice#, #amount#, 
+      #status#)
+    <selectKey keyProperty="id" resultClass="java.lang.Long" >
+      SELECT LAST_INSERT_ID() AS value
+    </selectKey>
+  </insert>
+
+  <update id="update" parameterClass="bgCartItemDO" >
+    UPDATE bg_cart_item set   gmt_modified = now()
+    <dynamic>
+      <isNotNull property="userId" prepend="," >
+        <![CDATA[  
+        user_id = #userId#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="skuId" prepend="," >
+        <![CDATA[  
+        sku_id = #skuId#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="salePrice" prepend="," >
+        <![CDATA[  
+        sale_price = #salePrice#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="amount" prepend="," >
+        <![CDATA[  
+        amount = #amount#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="status" prepend="," >
+        <![CDATA[  
+        status = #status#  
+        ]]>  
+      </isNotNull>
+    </dynamic>
+     WHERE id = #id#  
+  </update>
+
+  <select id="findByPrimaryKey" parameterClass="java.lang.Long" resultMap="bgCartItemDOResultMap" >
+     SELECT 
+    <include refid="bgCartItem_do_columns" />
+    <![CDATA[  
+     FROM bg_cart_item a1 WHERE id = #id# and status!=-1
+    ]]>  
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterClass="java.lang.Long" >
+    <![CDATA[  
+     DELETE FROM bg_cart_item WHERE id = #id#
+    ]]>  
+  </delete>
+
+  <select id="countByDOExample" parameterClass="bgCartItemDO" resultClass="java.lang.Integer" >
+    SELECT COUNT(id) AS num FROM bg_cart_item 
+    <include refid="doQueryParams" />
+  </select>
+
+  <select id="findListByDO" resultMap="bgCartItemDOResultMap" parameterClass="bgCartItemDO" >
+     SELECT 
+    <include refid="bgCartItem_do_columns" />
+     FROM bg_cart_item a1 
+    <include refid="doQueryParams" />
+  </select>
+</sqlMap>

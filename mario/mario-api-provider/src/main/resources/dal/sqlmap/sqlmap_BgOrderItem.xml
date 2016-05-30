@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+
+<sqlMap namespace="OrderItem" >
+
+  <typeAlias alias="bgOrderItemDO" type="org.yuanhong.li.bg.api.meta.OrderItemDO" />
+
+  <resultMap id="bgOrderItemDOResultMap" class="bgOrderItemDO" >
+    <result property="id" column="id" />
+    <result property="gmtCreate" column="gmt_create" />
+    <result property="gmtModified" column="gmt_modified" />
+    <result property="orderId" column="order_id" />
+    <result property="skuId" column="sku_id" />
+    <result property="barCode" column="bar_code" />
+    <result property="salePrice" column="sale_price" />
+    <result property="quantity" column="quantity" />
+    <result property="status" column="status" />
+  </resultMap>
+
+  <sql id="bgOrderItem_columns" >
+    a1.id, a1.gmt_create, a1.gmt_modified, a1.order_id, a1.sku_id, a1.bar_code, a1.sale_price, 
+      a1.quantity, a1.status
+  </sql>
+
+  <sql id="bgOrderItem_do_columns" >
+    a1.id, a1.gmt_create, a1.gmt_modified, a1.order_id, a1.sku_id, a1.bar_code, a1.sale_price, 
+      a1.quantity, a1.status
+  </sql>
+
+  <sql id="doQueryParams" >
+   where status!=-1
+    <dynamic>
+      <isNotNull property="id" prepend="AND" >
+        <![CDATA[  
+        id = #id#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="gmtCreate" prepend="AND" >
+        <![CDATA[  
+        gmt_create = #gmtCreate#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="gmtModified" prepend="AND" >
+        <![CDATA[  
+        gmt_modified = #gmtModified#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="orderId" prepend="AND" >
+        <![CDATA[  
+        order_id = #orderId#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="skuId" prepend="AND" >
+        <![CDATA[  
+        sku_id = #skuId#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="barCode" prepend="AND" >
+        <![CDATA[  
+        bar_code = #barCode#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="salePrice" prepend="AND" >
+        <![CDATA[  
+        sale_price = #salePrice#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="quantity" prepend="AND" >
+        <![CDATA[  
+        quantity = #quantity#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="status" prepend="AND" >
+        <![CDATA[  
+        status = #status#  
+        ]]>  
+      </isNotNull>
+    </dynamic>
+  </sql>
+
+  <insert id="insert" parameterClass="bgOrderItemDO" >
+    INSERT INTO bg_order_item( id, gmt_create, gmt_modified, order_id, sku_id, bar_code, sale_price, 
+      quantity, status)
+     VALUES ( #id#, now(), now(), #orderId#, #skuId#, #barCode#, #salePrice#, 
+      #quantity#, #status#)
+    <selectKey keyProperty="id" resultClass="java.lang.Long" >
+      SELECT LAST_INSERT_ID() AS value
+    </selectKey>
+  </insert>
+
+  <update id="update" parameterClass="bgOrderItemDO" >
+    UPDATE bg_order_item set gmt_modified=now()  
+    <dynamic>
+      <isNotNull property="orderId" prepend="," >
+        <![CDATA[  
+        order_id = #orderId#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="skuId" prepend="," >
+        <![CDATA[  
+        sku_id = #skuId#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="barCode" prepend="," >
+        <![CDATA[  
+        bar_code = #barCode#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="salePrice" prepend="," >
+        <![CDATA[  
+        sale_price = #salePrice#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="quantity" prepend="," >
+        <![CDATA[  
+        quantity = #quantity#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="status" prepend="," >
+        <![CDATA[  
+        status = #status#  
+        ]]>  
+      </isNotNull>
+    </dynamic>
+     WHERE id = #id#  
+  </update>
+
+  <select id="findByPrimaryKey" parameterClass="java.lang.Long" resultMap="bgOrderItemDOResultMap" >
+     SELECT 
+    <include refid="bgOrderItem_do_columns" />
+    <![CDATA[  
+     FROM bg_order_item a1 WHERE id = #id# and status!=-1
+    ]]>  
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterClass="java.lang.Long" >
+    <![CDATA[  
+     DELETE FROM bg_order_item WHERE id = #id#
+    ]]>  
+  </delete>
+
+  <select id="countByDOExample" parameterClass="bgOrderItemDO" resultClass="java.lang.Integer" >
+    SELECT COUNT(id) AS num FROM bg_order_item 
+    <include refid="doQueryParams" />
+  </select>
+
+  <select id="findListByDO" resultMap="bgOrderItemDOResultMap" parameterClass="bgOrderItemDO" >
+     SELECT 
+    <include refid="bgOrderItem_do_columns" />
+     FROM bg_order_item a1 
+    <include refid="doQueryParams" />
+  </select>
+</sqlMap>

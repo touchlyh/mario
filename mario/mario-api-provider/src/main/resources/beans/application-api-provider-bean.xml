@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="http://www.springframework.org/schema/beans"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+    default-autowire="byName">
+    <!-- DATASOURCE 定义 -->
+    <bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:sqlmap-config.xml" />
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>	
+	<!-- dbcp mysql jdbc DataSource -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="${mysql.driver}" />
+		<property name="url" value="${mysql.url}" />
+		<property name="username" value="${mysql.user}" />
+		<property name="password" value="${mysql.pass}" />
+	</bean>
+    
+    <!-- ======================================================================== -->
+    <!--  DAO定义。                                                             										  -->
+    <!-- ======================================================================== -->
+  
+    <bean id="cartItemDAO" class="org.yuanhong.li.bg.api.provider.dao.impl.CartItemDAOImpl"/>
+    <bean id="courseDAO" class="org.yuanhong.li.bg.api.provider.dao.impl.CourseDAOImpl"/>
+    <bean id="instituteDAO" class="org.yuanhong.li.bg.api.provider.dao.impl.InstituteDAOImpl"/>
+    <bean id="orderDAO" class="org.yuanhong.li.bg.api.provider.dao.impl.OrderDAOImpl"/>
+    <bean id="orderItemDAO" class="org.yuanhong.li.bg.api.provider.dao.impl.OrderItemDAOImpl"/>
+    <bean id="orderLogDAO" class="org.yuanhong.li.bg.api.provider.dao.impl.OrderLogDAOImpl"/>
+    <bean id="payRecordDAO" class="org.yuanhong.li.bg.api.provider.dao.impl.PayRecordDAOImpl"/>
+    <bean id="provinceDAO" class="org.yuanhong.li.bg.api.provider.dao.impl.ProvinceDAOImpl"/>
+    <bean id="shipAddressDAO" class="org.yuanhong.li.bg.api.provider.dao.impl.ShipAddressDAOImpl"/>
+    <bean id="skuDAO" class="org.yuanhong.li.bg.api.provider.dao.impl.SkuDAOImpl"/>
+    <bean id="spuDAO" class="org.yuanhong.li.bg.api.provider.dao.impl.SpuDAOImpl"/>
+    <bean id="universityDAO" class="org.yuanhong.li.bg.api.provider.dao.impl.UniversityDAOImpl"/>
+    <bean id="userDAO" class="org.yuanhong.li.bg.api.provider.dao.impl.UserDAOImpl"/>
+</beans>

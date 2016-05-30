@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+
+<sqlMap namespace="ShipAddress" >
+
+  <typeAlias alias="bgShipAddressDO" type="org.yuanhong.li.bg.api.meta.ShipAddressDO" />
+
+  <resultMap id="bgShipAddressDOResultMap" class="bgShipAddressDO" >
+    <result property="id" column="id" />
+    <result property="gmtCreate" column="gmt_create" />
+    <result property="gmtModified" column="gmt_modified" />
+    <result property="userId" column="user_id" />
+    <result property="email" column="email" />
+    <result property="defaultUse" column="default_use" />
+    <result property="status" column="status" />
+  </resultMap>
+
+  <sql id="bgShipAddress_columns" >
+    a1.id, a1.gmt_create, a1.gmt_modified, a1.user_id, a1.email, a1.default_use, a1.status
+      
+  </sql>
+
+  <sql id="bgShipAddress_do_columns" >
+    a1.id, a1.gmt_create, a1.gmt_modified, a1.user_id, a1.email, a1.default_use, a1.status
+      
+  </sql>
+
+  <sql id="doQueryParams" >
+  	where status!=-1
+    <dynamic >
+      <isNotNull property="id" prepend="AND" >
+        <![CDATA[  
+        id = #id#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="gmtCreate" prepend="AND" >
+        <![CDATA[  
+        gmt_create = #gmtCreate#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="gmtModified" prepend="AND" >
+        <![CDATA[  
+        gmt_modified = #gmtModified#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="userId" prepend="AND" >
+        <![CDATA[  
+        user_id = #userId#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="email" prepend="AND" >
+        <![CDATA[  
+        email = #email#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="defaultUse" prepend="AND" >
+        <![CDATA[  
+        default_use = #defaultUse#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="status" prepend="AND" >
+        <![CDATA[  
+        status = #status#  
+        ]]>  
+      </isNotNull>
+    </dynamic>
+  </sql>
+
+  <insert id="insert" parameterClass="bgShipAddressDO" >
+    INSERT INTO bg_ship_address( id, gmt_create, gmt_modified, user_id, email, default_use, status
+      )
+     VALUES ( #id#, now(), now(), #userId#, #email#, #defaultUse#, #status#
+      )
+    <selectKey keyProperty="id" resultClass="java.lang.Long" >
+      SELECT LAST_INSERT_ID() AS value
+    </selectKey>
+  </insert>
+
+  <update id="update" parameterClass="bgShipAddressDO" >
+    UPDATE bg_ship_address  set gmt_modified=now() 
+    <dynamic >
+      <isNotNull property="userId" prepend="," >
+        <![CDATA[  
+        user_id = #userId#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="email" prepend="," >
+        <![CDATA[  
+        email = #email#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="defaultUse" prepend="," >
+        <![CDATA[  
+        default_use = #defaultUse#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="status" prepend="," >
+        <![CDATA[  
+        status = #status#  
+        ]]>  
+      </isNotNull>
+    </dynamic>
+     WHERE id = #id#  
+  </update>
+
+  <select id="findByPrimaryKey" parameterClass="java.lang.Long" resultMap="bgShipAddressDOResultMap" >
+     SELECT 
+    <include refid="bgShipAddress_do_columns" />
+    <![CDATA[  
+     FROM bg_ship_address a1 WHERE id = #id# and status!=-1
+    ]]>  
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterClass="java.lang.Long" >
+    <![CDATA[  
+     DELETE FROM bg_ship_address WHERE id = #id#
+    ]]>  
+  </delete>
+
+  <select id="countByDOExample" parameterClass="bgShipAddressDO" resultClass="java.lang.Integer" >
+    SELECT COUNT(id) AS num FROM bg_ship_address 
+    <include refid="doQueryParams" />
+  </select>
+
+  <select id="findListByDO" resultMap="bgShipAddressDOResultMap" parameterClass="bgShipAddressDO" >
+     SELECT 
+    <include refid="bgShipAddress_do_columns" />
+     FROM bg_ship_address a1 
+    <include refid="doQueryParams" />
+  </select>
+</sqlMap>

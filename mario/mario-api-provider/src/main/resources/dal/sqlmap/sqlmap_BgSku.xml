@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+
+<sqlMap namespace="Sku" >
+
+  <typeAlias alias="bgSkuDO" type="org.yuanhong.li.bg.api.meta.SkuDO" />
+
+  <resultMap id="bgSkuDOResultMap" class="bgSkuDO" >
+    <result property="id" column="id" />
+    <result property="gmtCreate" column="gmt_create" />
+    <result property="gmtModified" column="gmt_modified" />
+    <result property="spuId" column="spu_id" />
+    <result property="barCode" column="bar_code" />
+    <result property="examTime" column="exam_time" />
+    <result property="hasAnswer" column="has_answer" />
+    <result property="salePrice" column="sale_price" />
+    <result property="inventory" column="inventory" />
+    <result property="diskPath" column="disk_path" />
+    <result property="status" column="status" />
+  </resultMap>
+
+  <sql id="bgSku_columns" >
+    a1.id, a1.gmt_create, a1.gmt_modified, a1.spu_id, a1.bar_code, a1.exam_time, a1.has_answer, 
+      a1.sale_price, a1.inventory, a1.disk_path, a1.status
+  </sql>
+
+  <sql id="bgSku_do_columns" >
+    a1.id, a1.gmt_create, a1.gmt_modified, a1.spu_id, a1.bar_code, a1.exam_time, a1.has_answer, 
+      a1.sale_price, a1.inventory, a1.disk_path, a1.status
+  </sql>
+
+
+  <sql id="doQueryParams" >
+  	where status!=-1
+    <dynamic>
+      <isNotNull property="id" prepend="AND" >
+        <![CDATA[  
+        id = #id#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="gmtCreate" prepend="AND" >
+        <![CDATA[  
+        gmt_create = #gmtCreate#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="gmtModified" prepend="AND" >
+        <![CDATA[  
+        gmt_modified = #gmtModified#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="spuId" prepend="AND" >
+        <![CDATA[  
+        spu_id = #spuId#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="barCode" prepend="AND" >
+        <![CDATA[  
+        bar_code = #barCode#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="examTime" prepend="AND" >
+        <![CDATA[  
+        exam_time = #examTime#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="hasAnswer" prepend="AND" >
+        <![CDATA[  
+        has_answer = #hasAnswer#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="salePrice" prepend="AND" >
+        <![CDATA[  
+        sale_price = #salePrice#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="inventory" prepend="AND" >
+        <![CDATA[  
+        inventory = #inventory#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="diskPath" prepend="AND" >
+        <![CDATA[  
+        disk_path = #diskPath#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="status" prepend="AND" >
+        <![CDATA[  
+        status = #status#  
+        ]]>  
+      </isNotNull>
+    </dynamic>
+  </sql>
+
+  <insert id="insert" parameterClass="bgSkuDO" >
+    INSERT INTO bg_sku( id, gmt_create, gmt_modified, spu_id, bar_code, exam_time, has_answer, 
+      sale_price, inventory, disk_path, status)
+     VALUES ( #id#, now(), now(), #spuId#, #barCode#, #examTime#, #hasAnswer#, 
+      #salePrice#, #inventory#, #diskPath#, #status#)
+    <selectKey keyProperty="id" resultClass="java.lang.Long" >
+      SELECT LAST_INSERT_ID() AS value
+    </selectKey>
+  </insert>
+
+  <update id="update" parameterClass="bgSkuDO" >
+    UPDATE bg_sku  set gmt_modified=now() 
+    <dynamic>
+      <isNotNull property="spuId" prepend="," >
+        <![CDATA[  
+        spu_id = #spuId#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="barCode" prepend="," >
+        <![CDATA[  
+        bar_code = #barCode#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="examTime" prepend="," >
+        <![CDATA[  
+        exam_time = #examTime#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="hasAnswer" prepend="," >
+        <![CDATA[  
+        has_answer = #hasAnswer#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="salePrice" prepend="," >
+        <![CDATA[  
+        sale_price = #salePrice#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="inventory" prepend="," >
+        <![CDATA[  
+        inventory = #inventory#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="diskPath" prepend="," >
+        <![CDATA[  
+        disk_path = #diskPath#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="status" prepend="," >
+        <![CDATA[  
+        status = #status#  
+        ]]>  
+      </isNotNull>
+    </dynamic>
+     WHERE id = #id#  
+  </update>
+
+  <select id="findByPrimaryKey" parameterClass="java.lang.Long" resultMap="bgSkuDOResultMap" >
+     SELECT 
+    <include refid="bgSku_do_columns" />
+    <![CDATA[  
+     FROM bg_sku a1 WHERE id = #id# and status!=-1
+    ]]>  
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterClass="java.lang.Long" >
+    <![CDATA[  
+     DELETE FROM bg_sku WHERE id = #id#
+    ]]>  
+  </delete>
+
+  <select id="countByDOExample" parameterClass="bgSkuDO" resultClass="java.lang.Integer" >
+    SELECT COUNT(id) AS num FROM bg_sku 
+    <include refid="doQueryParams" />
+  </select>
+
+  <select id="findListByDO" resultMap="bgSkuDOResultMap" parameterClass="bgSkuDO" >
+     SELECT 
+    <include refid="bgSku_do_columns" />
+     FROM bg_sku a1 
+    <include refid="doQueryParams" />
+  </select>
+</sqlMap>

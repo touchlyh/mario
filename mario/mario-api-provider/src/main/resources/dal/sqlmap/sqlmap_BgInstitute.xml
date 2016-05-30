@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+
+<sqlMap namespace="Institute" >
+
+  <typeAlias alias="bgInstituteDO" type="org.yuanhong.li.bg.api.meta.InstituteDO" />
+
+  <resultMap id="bgInstituteDOResultMap" class="bgInstituteDO" >
+    <result property="id" column="id" />
+    <result property="gmtCreate" column="gmt_create" />
+    <result property="gmtModified" column="gmt_modified" />
+    <result property="name" column="name" />
+    <result property="status" column="status" />
+  </resultMap>
+
+  <sql id="bgInstitute_columns" >
+    a1.id, a1.gmt_create, a1.gmt_modified, a1.name, a1.status
+  </sql>
+
+  <sql id="bgInstitute_do_columns" >
+    a1.id, a1.gmt_create, a1.gmt_modified, a1.name, a1.status
+  </sql>
+
+  <sql id="doQueryParams" >
+  	where status!=-1
+    <dynamic>
+      <isNotNull property="id" prepend="AND" >
+        <![CDATA[  
+        id = #id#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="gmtCreate" prepend="AND" >
+        <![CDATA[  
+        gmt_create = #gmtCreate#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="gmtModified" prepend="AND" >
+        <![CDATA[  
+        gmt_modified = #gmtModified#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="name" prepend="AND" >
+        <![CDATA[  
+        name = #name#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="status" prepend="AND" >
+        <![CDATA[  
+        status = #status#  
+        ]]>  
+      </isNotNull>
+    </dynamic>
+  </sql>
+
+  <insert id="insert" parameterClass="bgInstituteDO" >
+    INSERT INTO bg_institute( id, gmt_create, gmt_modified, name, status)
+     VALUES ( #id#, now(), now(), #name#, #status#)
+    <selectKey keyProperty="id" resultClass="java.lang.Long" >
+      SELECT LAST_INSERT_ID() AS value
+    </selectKey>
+  </insert>
+
+  <update id="update" parameterClass="bgInstituteDO" >
+    UPDATE bg_institute  set gmt_modified=now() 
+    <dynamic>
+      <isNotNull property="name" prepend="," >
+        <![CDATA[  
+        name = #name#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="status" prepend="," >
+        <![CDATA[  
+        status = #status#  
+        ]]>  
+      </isNotNull>
+    </dynamic>
+     WHERE id = #id#  
+  </update>
+
+  <select id="findByPrimaryKey" parameterClass="java.lang.Long" resultMap="bgInstituteDOResultMap" >
+     SELECT 
+    <include refid="bgInstitute_do_columns" />
+    <![CDATA[  
+     FROM bg_institute a1 WHERE id = #id# and status!=-1
+    ]]>  
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterClass="java.lang.Long" >
+    <![CDATA[  
+     DELETE FROM bg_institute WHERE id = #id#
+    ]]>  
+  </delete>
+
+  <select id="countByDOExample" parameterClass="bgInstituteDO" resultClass="java.lang.Integer" >
+    SELECT COUNT(id) AS num FROM bg_institute 
+    <include refid="doQueryParams" />
+  </select>
+
+  <select id="findListByDO" resultMap="bgInstituteDOResultMap" parameterClass="bgInstituteDO" >
+     SELECT 
+    <include refid="bgInstitute_do_columns" />
+     FROM bg_institute a1 
+    <include refid="doQueryParams" />
+  </select>
+</sqlMap>

@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+
+<sqlMap namespace="PayRecord" >
+
+  <typeAlias alias="bgPayRecordDO" type="org.yuanhong.li.bg.api.meta.PayRecordDO" />
+
+  <resultMap id="bgPayRecordDOResultMap" class="bgPayRecordDO" >
+    <result property="id" column="id" />
+    <result property="gmtCreate" column="gmt_create" />
+    <result property="gmtModified" column="gmt_modified" />
+    <result property="userId" column="user_id" />
+    <result property="orderId" column="order_id" />
+    <result property="payMethod" column="pay_method" />
+    <result property="payTotal" column="pay_total" />
+    <result property="payStatus" column="pay_status" />
+    <result property="status" column="status" />
+  </resultMap>
+
+  <sql id="bgPayRecord_columns" >
+    a1.id, a1.gmt_create, a1.gmt_modified, a1.user_id, a1.order_id, a1.pay_method, a1.pay_total, 
+      a1.pay_status, a1.status
+  </sql>
+
+  <sql id="bgPayRecord_do_columns" >
+    a1.id, a1.gmt_create, a1.gmt_modified, a1.user_id, a1.order_id, a1.pay_method, a1.pay_total, 
+      a1.pay_status, a1.status
+  </sql>
+
+  <sql id="doQueryParams" >
+  	where status!=-1
+    <dynamic>
+      <isNotNull property="id" prepend="AND" >
+        <![CDATA[  
+        id = #id#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="gmtCreate" prepend="AND" >
+        <![CDATA[  
+        gmt_create = #gmtCreate#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="gmtModified" prepend="AND" >
+        <![CDATA[  
+        gmt_modified = #gmtModified#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="userId" prepend="AND" >
+        <![CDATA[  
+        user_id = #userId#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="orderId" prepend="AND" >
+        <![CDATA[  
+        order_id = #orderId#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="payMethod" prepend="AND" >
+        <![CDATA[  
+        pay_method = #payMethod#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="payTotal" prepend="AND" >
+        <![CDATA[  
+        pay_total = #payTotal#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="payStatus" prepend="AND" >
+        <![CDATA[  
+        pay_status = #payStatus#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="status" prepend="AND" >
+        <![CDATA[  
+        status = #status#  
+        ]]>  
+      </isNotNull>
+    </dynamic>
+  </sql>
+
+  <insert id="insert" parameterClass="bgPayRecordDO" >
+    INSERT INTO bg_pay_record( id, gmt_create, gmt_modified, user_id, order_id, pay_method, pay_total, 
+      pay_status, status)
+     VALUES ( #id#, now(), now(), #userId#, #orderId#, #payMethod#, #payTotal#, 
+      #payStatus#, #status#)
+    <selectKey keyProperty="id" resultClass="java.lang.Long" >
+      SELECT LAST_INSERT_ID() AS value
+    </selectKey>
+  </insert>
+
+  <update id="update" parameterClass="bgPayRecordDO" >
+    UPDATE bg_pay_record set gmt_modified=now()  
+    <dynamic>
+      <isNotNull property="userId" prepend="," >
+        <![CDATA[  
+        user_id = #userId#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="orderId" prepend="," >
+        <![CDATA[  
+        order_id = #orderId#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="payMethod" prepend="," >
+        <![CDATA[  
+        pay_method = #payMethod#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="payTotal" prepend="," >
+        <![CDATA[  
+        pay_total = #payTotal#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="payStatus" prepend="," >
+        <![CDATA[  
+        pay_status = #payStatus#  
+        ]]>  
+      </isNotNull>
+      <isNotNull property="status" prepend="," >
+        <![CDATA[  
+        status = #status#  
+        ]]>  
+      </isNotNull>
+    </dynamic>
+     WHERE id = #id#  
+  </update>
+
+  <select id="findByPrimaryKey" parameterClass="java.lang.Long" resultMap="bgPayRecordDOResultMap" >
+     SELECT 
+    <include refid="bgPayRecord_do_columns" />
+    <![CDATA[  
+     FROM bg_pay_record a1 WHERE id = #id# and status!=-1
+    ]]>  
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterClass="java.lang.Long" >
+    <![CDATA[  
+     DELETE FROM bg_pay_record WHERE id = #id#
+    ]]>  
+  </delete>
+
+  <select id="countByDOExample" parameterClass="bgPayRecordDO" resultClass="java.lang.Integer" >
+    SELECT COUNT(id) AS num FROM bg_pay_record 
+    <include refid="doQueryParams" />
+  </select>
+
+  <select id="findListByDO" resultMap="bgPayRecordDOResultMap" parameterClass="bgPayRecordDO" >
+     SELECT 
+    <include refid="bgPayRecord_do_columns" />
+     FROM bg_pay_record a1 
+    <include refid="doQueryParams" />
+  </select>
+</sqlMap>
