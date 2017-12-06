@@ -7,10 +7,10 @@
 	<bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver">
 	</bean>
 
-	<bean id="viewResolver"
+<!-- 	<bean id="viewResolver"
 		class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
 		<property name="defaultContentType" value="text/html" />
-		<!-- 扩展名至mimeType的映射,即 /user.json => application/json -->
+		扩展名至mimeType的映射,即 /user.json => application/json
 		<property name="mediaTypes">
 			<map>
 				<entry key="html" value="text/html" />
@@ -18,7 +18,7 @@
 				 <entry key="xls" value="application/vnd.ms-excel"/>
 			</map>
 		</property>
-		<!-- 用于开启 /userinfo/123?format=json 的支持 -->
+		用于开启 /userinfo/123?format=json 的支持
 		<property name="favorParameter" value="false" />
 		<property name="viewResolvers">
 			<list>
@@ -43,7 +43,7 @@
 
 			</list>
 		</property>
-	</bean>
+	</bean> -->
 
 	<bean id="freemarkerConfig"
 		class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">

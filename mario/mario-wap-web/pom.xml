@@ -24,6 +24,12 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+		<!-- 添加websocket的依赖 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>  
+            <artifactId>spring-boot-starter-websocket</artifactId>  
+		</dependency>
+		
 		<!-- Spring 相关 -->
 		<dependency>
 			<groupId>org.springframework</groupId>

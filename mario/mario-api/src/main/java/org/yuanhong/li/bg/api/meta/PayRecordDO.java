@@ -1,4 +1,4 @@
-﻿package org.yuanhong.li.bg.api.meta;
+package org.yuanhong.li.bg.api.meta;
 
 import java.io.Serializable;
 import java.math.BigDecimal;

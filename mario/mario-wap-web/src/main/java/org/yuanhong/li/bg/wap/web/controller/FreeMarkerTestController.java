@@ -36,4 +36,12 @@ public class FreeMarkerTestController {
 		mav.setViewName("testfreemarker");
 		return mav;
 	}
+	
+	@RequestMapping(value = "test/websocket")
+	public ModelAndView testWebSocketView(HttpServletRequest request,
+			HttpServletResponse response) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("testwebsocket");
+		return mav;
+	}
 }

@@ -1,4 +1,4 @@
-﻿package org.yuanhong.li.bg.api.provider.dao.impl;
+package org.yuanhong.li.bg.api.provider.dao.impl;
 
 import java.util.List;
 

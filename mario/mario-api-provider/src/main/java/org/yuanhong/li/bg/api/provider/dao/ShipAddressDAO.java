@@ -1,4 +1,4 @@
-﻿package org.yuanhong.li.bg.api.provider.dao;
+package org.yuanhong.li.bg.api.provider.dao;
 
 import java.util.List;
 import org.yuanhong.li.bg.api.meta.ShipAddressDO;
