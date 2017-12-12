@@ -44,4 +44,12 @@ public class FreeMarkerTestController {
 		mav.setViewName("testwebsocket");
 		return mav;
 	}
+	
+	@RequestMapping(value = "test/snake")
+	public ModelAndView testSnakeView(HttpServletRequest request,
+			HttpServletResponse response) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("snake");
+		return mav;
+	}
 }
