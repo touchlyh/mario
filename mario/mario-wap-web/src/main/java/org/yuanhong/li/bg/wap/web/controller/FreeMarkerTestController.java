@@ -52,4 +52,12 @@ public class FreeMarkerTestController {
 		mav.setViewName("snake");
 		return mav;
 	}
+	
+	@RequestMapping(value = "test/pixi")
+	public ModelAndView testPixi(HttpServletRequest request,
+			HttpServletResponse response) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("firstpixi");
+		return mav;
+	}
 }
